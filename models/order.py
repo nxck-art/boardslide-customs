@@ -1,10 +1,10 @@
-from sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy() #to import db
 
 #order class
 class Order(db.Model):
-    __tablename__ = "Order" #dunder method that sets table name in db
+    __tablename__ = "order" #dunder method that sets table name in db
 
     #define columns
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)
