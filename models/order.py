@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy() #to import db
+from models import db
 
 #order class
 class Order(db.Model):
