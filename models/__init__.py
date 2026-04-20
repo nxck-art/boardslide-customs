@@ -1,8 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
-from models import db
-import models
 
-# import models for SQLAlchemy
+db = SQLAlchemy()
+
+# import models from SQLAlchemy
 from .product import Product
 from .customer import Customer
 from .order import Order

@@ -1,0 +1,11 @@
+<h1>Complete List of Customers</h1>
+
+<a href="/add_customer">Add Customer</a>
+
+<ul>
+  {% for customer in customers %}
+    <li>
+      {{ customer.fname }} {{ customer.lname }}; E-mail: {{ customer.email }}
+    </li>
+  {% endfor %}
+</ul>

@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from models import db
 
 class Customer(db.Model):
-    __tablename__ = 'product'
+    __tablename__ = 'customer'
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     fname = db.Column(db.String(30))
