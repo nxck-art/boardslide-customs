@@ -3,7 +3,7 @@ from models import db
 import models
 from models.product import Product
 from models.customer import Customer
-from models.skateboard import Skateboard  
+from models.skateboard import Skateboard
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
