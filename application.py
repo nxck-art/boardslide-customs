@@ -150,75 +150,69 @@ def view_skateboards():
     return render_template('skateboards.html', skateboards=boards)
 
 
-# Skateboard products
-p1 = Product()
-p1.name = "Element Complete Skateboard"
-p1.category = "Complete Skateboards"
-p1.price = 79.99
-p1.quantity = 5
-p1.image_url = "images/element_complete.jpg"
+with app.app_context():
+    db.create_all()
 
-p2 = Product()
-p2.name = "Santa Cruz Deck 8.0"
-p2.category = "Decks"
-p2.price = 59.99
-p2.quantity = 8
-p2.image_url = "images/santa_cruz_deck.jpg"
+    p1 = Product()
+    p1.name = "Element Complete Skateboard"
+    p1.category = "Complete Skateboards"
+    p1.price = 79.99
+    p1.quantity = 5
+    p1.image_url = "images/element_complete.jpg"
 
-p3 = Product()
-p3.name = "Independent Trucks Stage 11"
-p3.category = "Trucks"
-p3.price = 64.99
-p3.quantity = 6
-p3.image_url = "images/independent_trucks.jpg"
+    p2 = Product()
+    p2.name = "Santa Cruz Deck 8.0"
+    p2.category = "Decks"
+    p2.price = 59.99
+    p2.quantity = 8
+    p2.image_url = "images/santa_cruz_deck.jpg"
 
-p4 = Product()
-p4.name = "Spitfire Wheels 52mm"
-p4.category = "Wheels"
-p4.price = 39.99
-p4.quantity = 10
-p4.image_url = "images/spitfire_wheels.jpg"
+    p3 = Product()
+    p3.name = "Independent Trucks Stage 11"
+    p3.category = "Trucks"
+    p3.price = 64.99
+    p3.quantity = 6
+    p3.image_url = "images/independent_trucks.jpg"
 
-p5 = Product()
-p5.name = "Bones Reds Bearings"
-p5.category = "Bearings"
-p5.price = 19.99
-p5.quantity = 12
-p5.image_url = "images/bones_reds_bearings.jpg"
+    p4 = Product()
+    p4.name = "Spitfire Wheels 52mm"
+    p4.category = "Wheels"
+    p4.price = 39.99
+    p4.quantity = 10
+    p4.image_url = "images/spitfire_wheels.jpg"
 
-p6 = Product()
-p6.name = "Mob Grip Tape"
-p6.category = "Grip Tape"
-p6.price = 9.99
-p6.quantity = 15
-p6.image_url = "images/mob_grip_tape.jpg"
+    p5 = Product()
+    p5.name = "Bones Reds Bearings"
+    p5.category = "Bearings"
+    p5.price = 19.99
+    p5.quantity = 12
+    p5.image_url = "images/bones_reds_bearings.jpg"
 
-p7 = Product()
-p7.name = "Thrasher Hoodie"
-p7.category = "Clothing"
-p7.price = 59.99
-p7.quantity = 4
-p7.image_url = "images/thrasher_hoodie.jpg"
+    p6 = Product()
+    p6.name = "Mob Grip Tape"
+    p6.category = "Grip Tape"
+    p6.price = 9.99
+    p6.quantity = 15
+    p6.image_url = "images/mob_grip_tape.jpg"
 
-p8 = Product()
-p8.name = "Vans Skate Shoes"
-p8.category = "Shoes"
-p8.price = 69.99
-p8.quantity = 7
-p8.image_url = "images/vans_skate_shoes.jpg"
+    p7 = Product()
+    p7.name = "Thrasher Hoodie"
+    p7.category = "Clothing"
+    p7.price = 59.99
+    p7.quantity = 4
+    p7.image_url = "images/thrasher_hoodie.jpg"
 
-db.session.add(p1)
-db.session.add(p2)
-db.session.add(p3)
-db.session.add(p4)
-db.session.add(p5)
-db.session.add(p6)
-db.session.add(p7)
-db.session.add(p8)
+    p8 = Product()
+    p8.name = "Vans Skate Shoes"
+    p8.category = "Shoes"
+    p8.price = 69.99
+    p8.quantity = 7
+    p8.image_url = "images/vans_skate_shoes.jpg"
 
-db.session.commit()
+    db.session.add_all([p1, p2, p3, p4, p5, p6, p7, p8])
+    db.session.commit()
 
-print("Products added!")
-
+    print("Products added!")
+    
 if __name__ == '__main__':
     app.run(debug=False)
