@@ -19,15 +19,21 @@ with app.app_context():
 def homepage():
     return "<h1>Welcome to our most dope website!</h1>"
 
+@app.route('/products')
+def products():
+    products = Product.query.all()
+    return render_template('products.html', products=products)
+
 @app.route('/add_product', methods=['GET', 'POST'])
 def addproduct():
     if request.method == 'POST':
-        product = Product(
-            name = request.form['name'],
-            category = request.form['category'],
-            price = float(request.form['price']),
-            quantity = int(request.form['quantity'])
-        )
+        product = Product
+        product.name = request.form['name']
+        product.category = request.form['category']
+        product.price = float(request.form['price'])
+        product.quantity = int(request.form['quantity'])
+        product.image_url = request.form['image_url']
+
         db.session.add(product)
         db.session.commit()
         return redirect('/products')
@@ -35,13 +41,16 @@ def addproduct():
     return render_template('addproduct.html')
 
 @app.route('/edit_product/<int:id>', methods=['GET', 'POST'])
-def updateproduct():
+def updateproduct(id):
     product = Product.query.get(id)
+    if product is None:
+        return redirect('/products')
     if request.method == 'POST':
         product.name = request.form['name']
         product.category = request.form['category']
         product.price = float(request.form['price'])
         product.quantity = int(request.form['quantity'])
+        product.image_url = request.form['image_url']
 
         db.session.commit()
         return redirect('/products')
@@ -65,17 +74,90 @@ def viewall():
 @app.route('/add_customer', methods=['GET', 'POST'])
 def addcustomer():
     if request.method == "POST":
-        customer = Customer(
-            fname = request.form['fname'],
-            lname = request.form['lname'],
-            email = request.form['email'],
-            phone = request.form['phone'])
+        customer = Customer()
+        customer.fname = request.form['fname']
+        customer.lname = request.form['lname']
+        customer.email = request.form['email']
+        customer.phone = request.form['phone']
+
 
         db.session.add(customer)
         db.session.commit()
 
         return redirect('/customers')
     return render_template('addcustomer.html')
+
+# Products to add to database
+# Skateboard products
+p1 = Product()
+p1.name = "Element Complete Skateboard"
+p1.category = "Complete Skateboards"
+p1.price = 79.99
+p1.quantity = 5
+p1.image_url = "images/element_complete.jpg"
+
+p2 = Product()
+p2.name = "Santa Cruz Deck 8.0"
+p2.category = "Decks"
+p2.price = 59.99
+p2.quantity = 8
+p2.image_url = "images/santa_cruz_deck.jpg"
+
+p3 = Product()
+p3.name = "Independent Trucks Stage 11"
+p3.category = "Trucks"
+p3.price = 64.99
+p3.quantity = 6
+p3.image_url = "images/independent_trucks.jpg"
+
+p4 = Product()
+p4.name = "Spitfire Wheels 52mm"
+p4.category = "Wheels"
+p4.price = 39.99
+p4.quantity = 10
+p4.image_url = "images/spitfire_wheels.jpg"
+
+p5 = Product()
+p5.name = "Bones Reds Bearings"
+p5.category = "Bearings"
+p5.price = 19.99
+p5.quantity = 12
+p5.image_url = "images/bones_reds_bearings.jpg"
+
+p6 = Product()
+p6.name = "Mob Grip Tape"
+p6.category = "Grip Tape"
+p6.price = 9.99
+p6.quantity = 15
+p6.image_url = "images/mob_grip_tape.jpg"
+
+p7 = Product()
+p7.name = "Thrasher Hoodie"
+p7.category = "Clothing"
+p7.price = 59.99
+p7.quantity = 4
+p7.image_url = "images/thrasher_hoodie.jpg"
+
+p8 = Product()
+p8.name = "Vans Skate Shoes"
+p8.category = "Shoes"
+p8.price = 69.99
+p8.quantity = 7
+p8.image_url = "images/vans_skate_shoes.jpg"
+
+db.session.add(p1)
+db.session.add(p2)
+db.session.add(p3)
+db.session.add(p4)
+db.session.add(p5)
+db.session.add(p6)
+db.session.add(p7)
+db.session.add(p8)
+
+db.session.commit()
+
+print("Products added!")
+print("Products added!")
 
 if __name__ == '__main__':
     app.run(debug=False)
