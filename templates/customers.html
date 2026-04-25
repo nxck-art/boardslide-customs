@@ -1,11 +1,20 @@
-<h1>Complete List of Customers</h1>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Customers</h1>
 
 <a href="/add_customer">Add Customer</a>
 
 <ul>
   {% for customer in customers %}
     <li>
-      {{ customer.fname }} {{ customer.lname }}; E-mail: {{ customer.email }}
+      <strong>{{ customer.fname }} {{ customer.lname }}</strong> |
+      Email: {{ customer.email }} |
+      Phone: {{ customer.phone }}
+
+      [<a href="/delete_customer/{{ customer.id }}">Delete</a>]
     </li>
   {% endfor %}
 </ul>
+
+{% endblock %}

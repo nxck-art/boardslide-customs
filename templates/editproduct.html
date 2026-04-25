@@ -1,9 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Edit Product</h1>
 
 <form method="POST">
-  <input name="name" value="{{ product.name }}"><br>
-  <input name="category" value="{{ product.category }}"><br>
-  <input name="price" value="{{ product.price }}"><br>
-  <input name="quantity" value="{{ product.quantity }}"><br>
+  <input name="name" value="{{ product.name }}" required><br><br>
+  <input name="category" value="{{ product.category }}" required><br><br>
+  <input name="price" value="{{ product.price }}" required><br><br>
+  <input name="quantity" value="{{ product.quantity }}" required><br><br>
+
   <button type="submit">Update Product</button>
 </form>
+
+{% endblock %}
