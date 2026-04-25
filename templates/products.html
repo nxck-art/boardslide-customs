@@ -4,6 +4,7 @@
 
 <ul>
   {% for product in products %}
+  <img src="{{ url_for('static', filename=product.image_url) }}" width="150">
     <li>{{ product.name }} - ${{ product.price }}</li>
   {% endfor %}
 </ul>

@@ -9,3 +9,4 @@ class Product(db.Model):
     category = db.Column(db.String(30))
     price = db.Column(db.Float)
     quantity = db.Column(db.Integer)
+    image_url = db.Column(db.String(200))
