@@ -1,10 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Add Product</h1>
 
 <form method="POST">
-  <input name="name" placeholder="Name"><br>
-  <input name="category" placeholder="Category"><br>
-  <input name="price" placeholder="Price"><br>
-  <input name="quantity" placeholder="Quantity"><br>
-  <input name="image_url" placeholder="Image URL"><br>
+  <input name="name" placeholder="Name" required><br><br>
+  <input name="category" placeholder="Category" required><br><br>
+  <input name="price" placeholder="Price" required><br><br>
+  <input name="quantity" placeholder="Quantity" required><br><br>
+  <input name="image_url" placeholder="Image URL" required><br><br>
+
   <button type="submit">Add</button>
 </form>
+
+{% endblock %}

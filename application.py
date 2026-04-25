@@ -3,6 +3,7 @@ from models import db
 import models
 from models.product import Product
 from models.customer import Customer
+from models.skateboard import Skateboard
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -12,22 +13,23 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-#routes
 
-#HOME PAGE
 @app.route('/')
 def homepage():
-    return "<h1>Welcome to our most dope website!</h1>"
+    return render_template("index.html")
+
 
 @app.route('/products')
 def products():
     products = Product.query.all()
     return render_template('products.html', products=products)
 
+
 @app.route('/add_product', methods=['GET', 'POST'])
 def addproduct():
     if request.method == 'POST':
-        product = Product
+        product = Product()   # FIXED
+
         product.name = request.form['name']
         product.category = request.form['category']
         product.price = float(request.form['price'])
@@ -37,14 +39,17 @@ def addproduct():
         db.session.add(product)
         db.session.commit()
         return redirect('/products')
-    
+
     return render_template('addproduct.html')
+
 
 @app.route('/edit_product/<int:id>', methods=['GET', 'POST'])
 def updateproduct(id):
     product = Product.query.get(id)
+
     if product is None:
         return redirect('/products')
+
     if request.method == 'POST':
         product.name = request.form['name']
         product.category = request.form['category']
@@ -54,10 +59,12 @@ def updateproduct(id):
 
         db.session.commit()
         return redirect('/products')
+
     return render_template('editproduct.html', product=product)
 
+
 @app.route('/delete_product/<int:id>')
-def deleteproduct():
+def deleteproduct(id):   # FIXED
     product = Product.query.get(id)
 
     db.session.delete(product)
@@ -65,29 +72,84 @@ def deleteproduct():
 
     return redirect('/products')
 
-#customer management
+
 @app.route('/customers')
 def viewall():
     customers = Customer.query.all()
-    return render_template('customers.html', customers = customers)
+    return render_template('customers.html', customers=customers)
+
 
 @app.route('/add_customer', methods=['GET', 'POST'])
 def addcustomer():
     if request.method == "POST":
         customer = Customer()
+
         customer.fname = request.form['fname']
         customer.lname = request.form['lname']
         customer.email = request.form['email']
         customer.phone = request.form['phone']
 
-
         db.session.add(customer)
         db.session.commit()
 
         return redirect('/customers')
+
     return render_template('addcustomer.html')
 
-# Products to add to database
+
+@app.route('/build_skateboard', methods=['GET', 'POST'])
+def build_skateboard():
+    decks = Product.query.filter_by(category='Decks').all()
+    wheels = Product.query.filter_by(category='Wheels').all()
+    bearings = Product.query.filter_by(category='Bearings').all()
+    trucks = Product.query.filter_by(category='Trucks').all()
+    griptape = Product.query.filter_by(category='Grip Tape').all()
+
+    if request.method == 'POST':
+        deck = Product.query.get(request.form['deck'])
+        wheel = Product.query.get(request.form['wheels'])
+        bearing = Product.query.get(request.form['bearing'])
+        truck = Product.query.get(request.form['trucks'])
+        grip = Product.query.get(request.form['griptape'])
+
+        total = (
+            deck.price +
+            wheel.price +
+            bearing.price +
+            truck.price +
+            grip.price
+        )
+
+        skateboard = Skateboard(
+            deck_id=deck.id,
+            wheels_id=wheel.id,
+            bearing_id=bearing.id,
+            trucks_id=truck.id,
+            griptape_id=grip.id,
+            total=total
+        )
+
+        db.session.add(skateboard)
+        db.session.commit()
+
+        return redirect('/skateboards')
+
+    return render_template(
+        'customboard.html',
+        decks=decks,
+        wheels=wheels,
+        bearings=bearings,
+        trucks=trucks,
+        griptape=griptape
+    )
+
+
+@app.route('/skateboards')
+def view_skateboards():
+    boards = Skateboard.query.all()
+    return render_template('skateboards.html', skateboards=boards)
+
+
 # Skateboard products
 p1 = Product()
 p1.name = "Element Complete Skateboard"
@@ -156,7 +218,6 @@ db.session.add(p8)
 
 db.session.commit()
 
-print("Products added!")
 print("Products added!")
 
 if __name__ == '__main__':
