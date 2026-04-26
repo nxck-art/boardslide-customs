@@ -64,7 +64,7 @@ def updateproduct(id):
 
 
 @app.route('/delete_product/<int:id>')
-def deleteproduct(id):   # FIXED
+def deleteproduct(id):
     product = Product.query.get(id)
 
     db.session.delete(product)
