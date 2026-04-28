@@ -87,6 +87,10 @@ def addcustomer():
         return redirect('/customers')
     return render_template('addcustomer.html')
 
+@app.route('/build_skateboard')
+def build_skateboard():
+    return render_template('build_skateboard.html')
+
 # Products to add to database
 with app.app_context():
 
