@@ -3,38 +3,49 @@
 {% block content %}
 <h1>Build Your Skateboard</h1>
 
+<p>Decks: {{ decks|length }}</p>
+<p>Wheels: {{ wheels|length }}</p>
+<p>Bearings: {{ bearings|length }}</p>
+<p>Trucks: {{ trucks|length }}</p>
+<p>Grip: {{ griptape|length }}</p>
+
 <form method="POST">
 
   <label>Deck:</label><br>
-  <select name="deck">
+  <select name="deck" required>
+    <option value="">-- Select Deck --</option>
     {% for item in decks %}
       <option value="{{ item.id }}">{{ item.name }} - ${{ item.price }}</option>
     {% endfor %}
   </select><br><br>
 
   <label>Wheels:</label><br>
-  <select name="wheels">
+  <select name="wheels" required>
+    <option value="">-- Select Wheels --</option>
     {% for item in wheels %}
       <option value="{{ item.id }}">{{ item.name }} - ${{ item.price }}</option>
     {% endfor %}
   </select><br><br>
 
   <label>Bearings:</label><br>
-  <select name="bearing">
+  <select name="bearing" required>
+    <option value="">-- Select Bearings --</option>
     {% for item in bearings %}
       <option value="{{ item.id }}">{{ item.name }} - ${{ item.price }}</option>
     {% endfor %}
   </select><br><br>
 
   <label>Trucks:</label><br>
-  <select name="trucks">
+  <select name="trucks" required>
+    <option value="">-- Select Trucks --</option>
     {% for item in trucks %}
       <option value="{{ item.id }}">{{ item.name }} - ${{ item.price }}</option>
     {% endfor %}
   </select><br><br>
 
   <label>Griptape:</label><br>
-  <select name="griptape">
+  <select name="griptape" required>
+    <option value="">-- Select Griptape --</option>
     {% for item in griptape %}
       <option value="{{ item.id }}">{{ item.name }} - ${{ item.price }}</option>
     {% endfor %}

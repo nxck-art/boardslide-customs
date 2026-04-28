@@ -106,19 +106,24 @@ def build_skateboard():
     griptape = Product.query.filter_by(category='Grip Tape').all()
 
     if request.method == 'POST':
-        deck = Product.query.get(request.form['deck'])
-        wheel = Product.query.get(request.form['wheels'])
-        bearing = Product.query.get(request.form['bearing'])
-        truck = Product.query.get(request.form['trucks'])
-        grip = Product.query.get(request.form['griptape'])
+        print("FORM DATA:", request.form)
 
-        total = (
-            deck.price +
-            wheel.price +
-            bearing.price +
-            truck.price +
-            grip.price
-        )
+        deck_id = request.form.get('deck')
+        wheel_id = request.form.get('wheels')
+        bearing_id = request.form.get('bearing')
+        truck_id = request.form.get('trucks')
+        grip_id = request.form.get('griptape')
+
+        if not all([deck_id, wheel_id, bearing_id, truck_id, grip_id]):
+            return "Please select all components before submitting."
+
+        deck = Product.query.get(int(deck_id))
+        wheel = Product.query.get(int(wheel_id))
+        bearing = Product.query.get(int(bearing_id))
+        truck = Product.query.get(int(truck_id))
+        grip = Product.query.get(int(grip_id))
+
+        total = deck.price + wheel.price + bearing.price + truck.price + grip.price
 
         skateboard = Skateboard(
             deck_id=deck.id,
@@ -213,6 +218,6 @@ with app.app_context():
     db.session.commit()
 
     print("Products added!")
-    
+
 if __name__ == '__main__':
     app.run(debug=False)

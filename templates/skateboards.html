@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Built Skateboards</h1>
+
+{% for board in skateboards %}
+  <div>
+    <p><strong>Deck ID:</strong> {{ board.deck_id }}</p>
+    <p><strong>Wheels ID:</strong> {{ board.wheels_id }}</p>
+    <p><strong>Bearings ID:</strong> {{ board.bearing_id }}</p>
+    <p><strong>Trucks ID:</strong> {{ board.trucks_id }}</p>
+    <p><strong>Griptape ID:</strong> {{ board.griptape_id }}</p>
+    <p><strong>Total:</strong> ${{ board.total }}</p>
+    <hr>
+  </div>
+{% endfor %}
+
+{% endblock %}
